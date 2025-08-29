@@ -30,4 +30,7 @@ res.status(200).json(data);
         res.status(500).json({err: "Internet issue"});
     }
 })
+router.get('/', (req, res) => {
+  res.status(200).json({ message: "Welcome to the API!" });
+});
 export default router;
