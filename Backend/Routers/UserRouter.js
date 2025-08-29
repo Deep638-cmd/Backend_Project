@@ -1,7 +1,7 @@
 import express from "express"
 const router=express.Router();
 import item from "../Models/UserModel.js"
-import {verify,generate} from "../authentication.js"
+import {verify,generate} from "../Authentication.js"
 router.post("/register", async (req, res) => {
   try {
     console.log("📩 Received body:", req.body);
