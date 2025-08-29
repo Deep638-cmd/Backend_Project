@@ -1,7 +1,7 @@
 import express from "express";
 const router=express.Router();
 import item from "../Models/NormalModel.js";
-import {verify,generate} from "../authentication.js"
+import {verify,generate} from "../Authentication.js"
 router.post("/contact",verify,async(req,res)=>{
     try{
  const { name, email, massege } = req.body;
