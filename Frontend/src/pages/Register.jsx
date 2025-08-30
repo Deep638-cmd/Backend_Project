@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom';
 
-const BACKEND_URL = "https://backend-project-five-omega.vercel.app";
+const BACKEND_URL = "https://my-own-project-backend.onrender.com";
 const Register = () => {
   let navigate=useNavigate();
   const [Save,setSave]=useState({
