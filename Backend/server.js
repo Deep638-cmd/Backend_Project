@@ -17,7 +17,7 @@ app.use(cors({
   credentials: true
 }));
 app.use("/user",route);
-app.use("/",route1);
+app.use("/other",route1);
 app.use("/service",route2)
 
 app.listen(port,()=>{
