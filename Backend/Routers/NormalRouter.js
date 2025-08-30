@@ -7,11 +7,11 @@ router.post("/contact",verify,async(req,res)=>{
  const { name, email, massege } = req.body;
 
         // Basic validation
-        if (!name || !email || !massege) {
-            return res.status(400).json({ 
-                error: "All fields are required" 
-            });
-        }
+        // if (!name || !email || !massege) {
+        //     return res.status(400).json({ 
+        //         error: "All fields are required" 
+        //     });
+        // }
 const model=new item({name, email,massege});
 const newmodel=await model.save();
 res.status(200).json(newmodel);

@@ -31,9 +31,9 @@ app.use((req, res) => {
 mongodb();
 
 
-if (process.env.NODE_ENV !== 'production') {
+
     app.listen(port, () => {
         console.log(`Server is running at ${port}`);
     });
-}
-export default app;
+
+//export default app;
