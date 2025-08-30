@@ -36,4 +36,4 @@ mongodb();
         console.log(`Server is running at ${port}`);
     });
 
-//export default app;
+export default app;
