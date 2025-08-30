@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-const BACKEND_URL = "https://backend-project-oc4e.onrender.com";
+const BACKEND_URL = "https://backend-project-1-wxg2.onrender.com";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
