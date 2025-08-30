@@ -23,6 +23,10 @@ app.get("/", (req, res) => {
 app.use("/user",route);
 app.use("/other",route1);
 app.use("/service",route2)
+app.use((req, res) => {
+    res.status(404).json({ error: "Route not found" });
+});
+
 
 app.listen(port,()=>{
     console.log(`the code is running at ${port} address`);
