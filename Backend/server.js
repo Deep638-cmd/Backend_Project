@@ -16,6 +16,10 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Server is running and healthy!" });
+});
+
 app.use("/user",route);
 app.use("/other",route1);
 app.use("/service",route2)
