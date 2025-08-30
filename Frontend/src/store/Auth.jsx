@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+const BACKEND_URL = "https://backend-project-39i3.vercel.app";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 console.log(" isAuthenticated ", isAuthenticated )
   const ayan = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/user/me`, {
+      const response = await fetch(`${BACKEND_URL}/user/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`
@@ -38,7 +38,7 @@ console.log(" isAuthenticated ", isAuthenticated )
 
   const deep = async () => {
     try {
-      const response = await fetch("http://localhost:8080/service/get", {
+      const response = await fetch(`${BACKEND_URL}/service/get`, {
         method: "GET"
        
       });

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom';
 
-
+const BACKEND_URL = "https://backend-project-39i3.vercel.app";
 const Register = () => {
   let navigate=useNavigate();
   const [Save,setSave]=useState({
@@ -37,7 +37,7 @@ const handleSubmit = async (e) => {
     // 👉 Use a copy of Save before resetting
     const userData = { ...Save };
 
-    const response = await fetch(`http://localhost:8080/user/register`, {
+    const response = await fetch(`${BACKEND_URL}/user/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

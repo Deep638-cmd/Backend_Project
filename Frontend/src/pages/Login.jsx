@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/Auth';
+const BACKEND_URL = "https://backend-project-39i3.vercel.app";
 const Login = () => {
   let navigate=useNavigate();
   let {localStorages}= useAuth();
@@ -24,7 +25,7 @@ e.preventDefault();
 console.log("USer is",User);
 try{
   const Deep={...User};
-  const response=await fetch(`http://localhost:8080/user/login`,{
+  const response=await fetch(`${BACKEND_URL}/user/login`,{
     method:"POST",
     headers:{
       "Content-Type":"application/json"

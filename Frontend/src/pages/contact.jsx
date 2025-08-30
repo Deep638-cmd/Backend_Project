@@ -2,7 +2,7 @@ import contact from "./photo/Contact.png";
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/Auth";
 import { useNavigate } from "react-router-dom";
-
+const BACKEND_URL = "https://backend-project-39i3.vercel.app";
 //import {User} from "./Login";
 const Contact = () => {
   const[Users,setUsers]=useState({
@@ -43,7 +43,7 @@ const handleSubmits = async (e) => {
     // 👉 Use a copy of Save before resetting
     const userData = { ...Users };
 
-    const response = await fetch(`http://localhost:8080/other/contact`, {
+    const response = await fetch(`${BACKEND_URL}/other/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
