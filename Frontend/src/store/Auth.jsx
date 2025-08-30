@@ -2,7 +2,7 @@ import React, { useState, useContext, createContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 const AuthContext = createContext(null);
-const BACKEND_URL = "https://backend-project-2-lya3.onrender.com";
+const BACKEND_URL = "https://backend-project-3-5usz.onrender.com";
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token'));

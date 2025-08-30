@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const BACKEND_URL = "https://backend-project-2-lya3.onrender.com";
+const BACKEND_URL = "https://backend-project-3-5usz.onrender.com";
 
 const Register = () => {
   const navigate = useNavigate();

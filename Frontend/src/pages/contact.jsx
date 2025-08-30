@@ -2,7 +2,7 @@ import contact from "./photo/Contact.png";
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/Auth";
 import { useNavigate } from "react-router-dom";
-const BACKEND_URL = "https://backend-project-2-lya3.onrender.com";
+const BACKEND_URL = "https://backend-project-3-5usz.onrender.com";
 //import {User} from "./Login";
 const Contact = () => {
   const[Users,setUsers]=useState({
