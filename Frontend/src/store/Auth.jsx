@@ -1,20 +1,25 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { useState, useContext, createContext, useEffect } from 'react';
+
+// This is the AuthContext and AuthProvider component from your Auth.jsx file,
+// adapted to work within this single-file environment.
+const AuthContext = createContext(null);
 const BACKEND_URL = "https://backend-project-1-wxg2.onrender.com";
-export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("Token"));
-  const [user, setuser] = useState();
-  const [service, setservice] = useState();
+const AuthProvider = ({ children }) => {
+  // We use a state variable instead of localStorage, which is not available in this environment.
+  const [token, setToken] = useState(null);
+  const [user, setuser] = useState(null);
+  const [service, setservice] = useState(null);
 
-  const localStorages = (token) => {
-    setToken(token);
-    return localStorage.setItem("Token", token);
+  const localStorages = (newToken) => {
+    setToken(newToken);
+   // showMessage('Success', 'Login successful!');
   };
 
   const isAuthenticated = !!token;
-console.log(" isAuthenticated ", isAuthenticated )
-  const ayan = async () => {
+
+  const fetchUser = async () => {
+    if (!token) return;
     try {
       const response = await fetch(`${BACKEND_URL}/user/me`, {
         method: "GET",
@@ -25,50 +30,57 @@ console.log(" isAuthenticated ", isAuthenticated )
 
       if (response.ok) {
         const data = await response.json();
-        console.log("AYAN", data);
         setuser({
           name: data.name,
           email: data.email
         });
+      } else {
+        // Handle token expiration or invalid token
+        setToken(null);
+        setuser(null);
+      //  showMessage('Error', 'Session expired. Please log in again.');
       }
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching user data:", err);
+      setToken(null);
+      setuser(null);
+    //  showMessage('Error', 'Failed to fetch user data. Please check your connection.');
     }
   };
 
-  const deep = async () => {
+  const fetchServices = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/service/get`, {
         method: "GET"
-       
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log("AYAN", data);
         setservice(data);
+      } else {
+        //showMessage('Error', 'Failed to fetch services.');
       }
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching services:", err);
+    //  showMessage('Error', 'An error occurred while fetching services.');
     }
   };
 
-  // Move useEffect outside of deep function
   useEffect(() => {
-    deep();
+    fetchServices();
   }, []);
 
   useEffect(() => {
     if (token) {
-      ayan();
+      fetchUser();
     } else {
       setuser(null);
     }
   }, [token]);
 
   const logout = () => {
-    setToken("");
-    return localStorage.removeItem("Token");
+    setToken(null);
+    setuser(null);
   };
 
   return (
