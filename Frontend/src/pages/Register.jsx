@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom';
 
-const BACKEND_URL = "https://backend-project-39i3.vercel.app";
+const BACKEND_URL = "https://backend-project-five-omega.vercel.app";
 const Register = () => {
   let navigate=useNavigate();
   const [Save,setSave]=useState({

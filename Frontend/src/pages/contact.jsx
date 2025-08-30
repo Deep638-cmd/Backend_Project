@@ -2,7 +2,7 @@ import contact from "./photo/Contact.png";
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/Auth";
 import { useNavigate } from "react-router-dom";
-const BACKEND_URL = "https://backend-project-39i3.vercel.app";
+const BACKEND_URL = "https://backend-project-five-omega.vercel.app";
 //import {User} from "./Login";
 const Contact = () => {
   const[Users,setUsers]=useState({

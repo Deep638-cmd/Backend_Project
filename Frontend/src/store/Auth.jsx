@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-const BACKEND_URL = "https://backend-project-39i3.vercel.app";
+const BACKEND_URL = "https://backend-project-five-omega.vercel.app";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
