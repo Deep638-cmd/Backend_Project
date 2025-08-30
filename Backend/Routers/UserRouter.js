@@ -5,7 +5,7 @@ import {verify,generate} from "../Authentication.js"
 router.post("/register", async (req, res) => {
   try {
     console.log("📩 Received body:", req.body);
-res.send("Ayan")
+//res.send("Ayan")
     const { name, email, number, password, Cpassword } = req.body;
 
     // 1️⃣ Check confirm password
