@@ -5,7 +5,7 @@ import {verify,generate} from "../Authentication.js"
 router.post("/register", async (req, res) => {
   try {
     console.log("📩 Received body:", req.body);
-
+res.send("Ayan")
     const { name, email, number, password, Cpassword } = req.body;
 
     // 1️⃣ Check confirm password
@@ -41,7 +41,7 @@ router.post("/login",async(req,res)=>{  // Login
     try{
         const {email,password}=req.body;
 const user=await item.findOne({email: email});
-
+res.send("Deep")
 if(!user){
     
     console.log("User is not found")
