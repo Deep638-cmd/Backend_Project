@@ -12,7 +12,7 @@ import route2 from "./Routers/ServiceRouter.js"
 
 app.use(express.json());
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: "https://backend-project-ivory.iota.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
