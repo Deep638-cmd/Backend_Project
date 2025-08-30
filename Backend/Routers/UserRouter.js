@@ -41,7 +41,7 @@ router.post("/login",async(req,res)=>{  // Login
     try{
         const {email,password}=req.body;
 const user=await item.findOne({email: email});
-res.send("Deep")
+// res.send("Deep")
 if(!user){
     
     console.log("User is not found")
