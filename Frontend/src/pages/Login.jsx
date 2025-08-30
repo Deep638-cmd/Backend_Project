@@ -33,6 +33,7 @@ try{
     },
     body: JSON.stringify(Deep)
   })
+  console.log("RESPONSE",response)
   if(response.ok){
     alert(`Login succesfully`)
   let data=await response.json();
