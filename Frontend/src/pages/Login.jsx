@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/Auth';
 import { toast } from 'react-toastify';
 
-const BACKEND_URL = "https://backend-project-1-wxg2.onrender.com";
+const BACKEND_URL = "https://backend-project-2-lya3.onrender.com";
 
 const Login = () => {
   const navigate = useNavigate();
