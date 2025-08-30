@@ -1,183 +1,202 @@
-import React, { useState } from 'react'
-
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const BACKEND_URL = "https://backend-project-2-lya3.onrender.com";
+
 const Register = () => {
-  let navigate=useNavigate();
-  const [Save,setSave]=useState({
-
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
+  const [error, setError] = useState('');
+  
+  const [Save, setSave] = useState({
     name: "",
-    email:"",
-    number:"",
+    email: "",
+    number: "",
     password: "",
-    Cpassword:""   
-  })
-   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const handleInput=(e)=>{
-console.log(e);
-let name=e.target.name;
-let value=e.target.value;
-setSave({
-  ...Save,
-  [name]:value
-})
+    Cpassword: ""
+  });
 
-  }
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setSave(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    setError('');
+  };
 
-  if (Save.password !== Save.Cpassword) {
-    alert("Password is not matched");
-    return;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
 
-  try {
-    // 👉 Use a copy of Save before resetting
-    const userData = { ...Save };
+    try {
+      if (!Save.name || !Save.email || !Save.number || !Save.password || !Save.Cpassword) {
+        setError('Please fill in all fields');
+        setIsLoading(false);
+        return;
+      }
 
-    const response = await fetch(`${BACKEND_URL}/user/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(userData)
-    });
+      if (Save.password !== Save.Cpassword) {
+        setError("Passwords don't match");
+        setIsLoading(false);
+        return;
+      }
 
-    const data = await response.json();
-    console.log("✅ Server response:", data);
+      const response = await fetch(`${BACKEND_URL}/user/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: Save.name,
+          email: Save.email,
+          number: Save.number,
+          password: Save.password
+        })
+      });
 
-    // 👉 Reset only after successful call
-    setSave({
-      name: "",
-      email: "",
-      number: "",
-      password: "",
-      Cpassword: ""
-    });
-    navigate("/login")
-  } catch (err) {
-    console.log("❌ Fetch error:", err);
-  }
-};
+      const data = await response.json();
 
+      if (response.ok) {
+        setSave({
+          name: "",
+          email: "",
+          number: "",
+          password: "",
+          Cpassword: ""
+        });
+        navigate('/login');
+      } else {
+        setError(data.message || 'Registration failed');
+      }
+    } catch (err) {
+      console.error("Registration error:", err);
+      setError('Network error. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-     <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white flex items-center justify-center p-4 sm:p-6 md:p-8">
-      <div className="bg-gray-800/90 backdrop-blur-sm shadow-xl rounded-2xl w-full max-w-[90%] sm:max-w-[450px] md:max-w-[500px] p-4 sm:p-6 md:p-8 border border-gray-700">
-        <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 font-extrabold text-center text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-8">
-          Create Account
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-blue-900 text-white flex items-center justify-center p-4">
+      <div className="bg-gray-800/90 backdrop-blur-sm shadow-2xl rounded-2xl w-full max-w-md p-6 border border-gray-700/50">
+        <h2 className="text-2xl font-bold text-center mb-6">Create Account</h2>
+        
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/50 text-red-500 px-4 py-2 rounded-lg mb-4">
+            {error}
+          </div>
+        )}
 
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-          <div className="space-y-4">
-            {/* Name Input */}
-            <div className="group">
-              <input 
-                name="name"
-                onChange={handleInput}
-                type='text' 
-                placeholder='Name'
-                autoComplete='off'
-                value={Save.name}
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-sm sm:text-base"
-              />
-            </div>
-
-            {/* Email Input */}
-            <div className="group">
-              <input 
-                name="email"
-                onChange={handleInput}
-                type='email'
-                placeholder='Email'
-                autoComplete='off'
-                value={Save.email}
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-sm sm:text-base"
-              />
-            </div>
-
-            {/* Phone Number Input */}
-            <div className="group">
-              <input 
-                type='number'
-                onChange={handleInput}
-                name="number"
-                placeholder='Phone Number'
-                autoComplete='off'
-                value={Save.number}
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-sm sm:text-base"
-              />
-            </div>
-
-            {/* Password Input */}
-            <div className="group relative">
-              <input 
-                value={Save.password}
-                name="password"
-                onChange={handleInput}
-                autoComplete='off'
-                type={showPassword ? "text" : "password"}
-                placeholder='Password'
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12 transition-all duration-300 text-sm sm:text-base"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xl hover:scale-110 transition-transform duration-200"
-              >
-                {showPassword ? "🙈" : "👁"}
-              </button>
-            </div>
-
-            {/* Confirm Password Input */}
-            <div className="group relative">
-              <input 
-                value={Save.Cpassword}
-                onChange={handleInput}
-                name="Cpassword"
-                autoComplete='off'
-                placeholder='Confirm Password'
-                type={showConfirm ? "text" : "password"}
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12 transition-all duration-300 text-sm sm:text-base"
-              />
-              <button
-                type='button'
-                onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xl hover:scale-110 transition-transform duration-200"
-              >
-                {showConfirm ? "🙈" : "👁"}
-              </button>
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={Save.name}
+              onChange={handleInput}
+              className="w-full px-3 py-2 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your name"
+              required
+            />
           </div>
 
-          {/* Submit Button */}
-          <div className="pt-2 sm:pt-4">
-            <button 
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
-              type='submit'
+          <div>
+            <label className="block text-sm font-medium mb-1">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={Save.email}
+              onChange={handleInput}
+              className="w-full px-3 py-2 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Phone Number</label>
+            <input
+              type="tel"
+              name="number"
+              value={Save.number}
+              onChange={handleInput}
+              className="w-full px-3 py-2 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your phone number"
+              required
+            />
+          </div>
+
+          <div className="relative">
+            <label className="block text-sm font-medium mb-1">Password</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={Save.password}
+              onChange={handleInput}
+              className="w-full px-3 py-2 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500"
+              placeholder="Create password"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-8 text-gray-400"
             >
-              Create Account
+              {showPassword ? "Hide" : "Show"}
             </button>
           </div>
-        </form>
 
-        {/* Already have account link */}
-        <div className="mt-6 text-center text-sm sm:text-base">
-          <span className="text-gray-400">Already have an account?</span>
+          <div className="relative">
+            <label className="block text-sm font-medium mb-1">Confirm Password</label>
+            <input
+              type={showCPassword ? "text" : "password"}
+              name="Cpassword"
+              value={Save.Cpassword}
+              onChange={handleInput}
+              className="w-full px-3 py-2 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500"
+              placeholder="Confirm password"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowCPassword(!showCPassword)}
+              className="absolute right-3 top-8 text-gray-400"
+            >
+              {showCPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-400">
+              Already have an account?
+            </span>
+            <Link 
+              to="/login"
+              className="text-blue-400 hover:text-blue-300 text-sm font-medium"
+            >
+              Login here
+            </Link>
+          </div>
+
           <button 
-            onClick={() => navigate('/login')}
-            className="ml-2 text-blue-400 hover:text-blue-300 font-medium transition-colors duration-300"
+            type="submit" 
+            disabled={isLoading}
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 
+                     hover:to-purple-700 text-white font-medium py-3 rounded-lg transition-all 
+                     duration-300 transform hover:scale-[1.02] active:scale-[0.98] 
+                     disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Login
+            {isLoading ? 'Creating Account...' : 'Create Account'}
           </button>
-        </div>
+        </form>
       </div>
     </div>
+  );
+};
 
-    
-  )
-}
-
-export default Register
+export default Register;
