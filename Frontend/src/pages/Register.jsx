@@ -22,6 +22,7 @@ const Register = () => {
     const { name, value } = e.target;
  if (name === 'number') {
     if (value.length > 10) {
+      alert(`please enter a valid Number`)
       setError('Phone number cannot be more than 10 digits');
       return;
     }
@@ -43,6 +44,7 @@ const Register = () => {
 
     try {
       if (!Save.name || !Save.email || !Save.number || !Save.password || !Save.Cpassword) {
+        alert(`Please fill in all fields`)
         setError('Please fill in all fields');
         setIsLoading(false);
         return;
@@ -57,6 +59,7 @@ const Register = () => {
 
 
       if (Save.password !== Save.Cpassword) {
+       
         setError("Passwords don't match");
         setIsLoading(false);
         return;
@@ -146,7 +149,7 @@ const Register = () => {
   pattern="[0-9]{10}"
   onKeyPress={(e) => {
     if (!/[0-9]/.test(e.key)) {
-      alert("Plaese enter a valid Number")
+     
       e.preventDefault();
     }
   }}
