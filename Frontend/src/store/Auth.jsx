@@ -1,5 +1,5 @@
 import React, { useState, useContext, createContext, useEffect } from 'react';
-import { toast } from 'react-toastify';
+//import { toast } from 'react-toastify';
 
 const AuthContext = createContext(null);
 const BACKEND_URL = "https://backend-project-3-5usz.onrender.com";
@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
   const localStorages = (newToken) => {
     setToken(newToken);
     localStorage.setItem('token', newToken);
-    toast.success('Login successful!');
+   // toast.success('Login successful!');
   };
 
   const isAuthenticated = !!token;
@@ -45,14 +45,14 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         setToken(null);
         setUser(null);
-        toast.error('Session expired. Please log in again.');
+        //toast.error('Session expired. Please log in again.');
       }
     } catch (err) {
       console.error("Error fetching user data:", err);
       localStorage.removeItem('token');
       setToken(null);
       setUser(null);
-      toast.error('Network error. Please check your connection.');
+      //toast.error('Network error. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -73,11 +73,11 @@ const AuthProvider = ({ children }) => {
         setService(data);
       } else {
         const errorData = await response.json();
-        toast.error(errorData.message || 'Failed to fetch services');
+      //  toast.error(errorData.message || 'Failed to fetch services');
       }
     } catch (err) {
       console.error("Error fetching services:", err);
-      toast.error('Failed to load services. Please try again later.');
+    //  toast.error('Failed to load services. Please try again later.');
     }
   };
 
@@ -93,7 +93,7 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     setToken(null);
     setUser(null);
-    toast.success('Logged out successfully');
+   // toast.success('Logged out successfully');
   };
 
   const value = {

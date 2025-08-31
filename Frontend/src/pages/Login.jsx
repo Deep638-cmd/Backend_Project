@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/Auth';
-import { toast } from 'react-toastify';
+//import { toast } from 'react-toastify';
 
 const BACKEND_URL = "https://backend-project-3-5usz.onrender.com";
 
