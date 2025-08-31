@@ -20,6 +20,15 @@ const Register = () => {
 
   const handleInput = (e) => {
     const { name, value } = e.target;
+ if (name === 'number') {
+    if (value.length > 10) {
+      setError('Phone number cannot be more than 10 digits');
+      return;
+    }
+  }
+
+
+
     setSave(prev => ({
       ...prev,
       [name]: value
@@ -38,6 +47,14 @@ const Register = () => {
         setIsLoading(false);
         return;
       }
+ // Phone number length validation
+    if (Save.number.length !== 10) {
+      setError('Phone number must be exactly 10 digits');
+      setIsLoading(false);
+      return;
+    }
+
+
 
       if (Save.password !== Save.Cpassword) {
         setError("Passwords don't match");
@@ -120,15 +137,22 @@ const Register = () => {
 
           <div>
             <label className="block text-sm font-medium mb-1">Phone Number</label>
-            <input
-              type="tel"
-              name="number"
-              value={Save.number}
-              onChange={handleInput}
-              className="w-full px-3 py-2 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your phone number"
-              required
-            />
+           <input
+  type="tel"
+  name="number"
+  value={Save.number}
+  onChange={handleInput}
+  maxLength={10}
+  pattern="[0-9]{10}"
+  onKeyPress={(e) => {
+    if (!/[0-9]/.test(e.key)) {
+      e.preventDefault();
+    }
+  }}
+  className="w-full px-3 py-2 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500"
+  placeholder="Enter your phone number"
+  required
+/>
           </div>
 
           <div className="relative">
