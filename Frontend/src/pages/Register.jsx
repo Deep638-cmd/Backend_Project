@@ -146,6 +146,7 @@ const Register = () => {
   pattern="[0-9]{10}"
   onKeyPress={(e) => {
     if (!/[0-9]/.test(e.key)) {
+      alert("Plaese enter a valid Number")
       e.preventDefault();
     }
   }}
